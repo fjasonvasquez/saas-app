@@ -1,5 +1,18 @@
 // function to get params from URL
 
+function GetURLParameter(sParam) {
+	var sPageURL = window.location.search.substring(1);
+	var sURLVariables = sPageURL.split('&');
+	for (var i = 0; i < sURLVariables.length; i ++)
+	{
+		var sParameterName = sURLVariables[i].split('=');
+		if (sParameterName[0] == sParam)
+		{
+			return sParameterName[1];
+		}
+	}
+};
+
 $(document).ready(function() {
 
 	var show_error, stripeResponseHandler, submitHandler;
@@ -40,9 +53,12 @@ $(document).ready(function() {
 	}
 
 // Set up plan change event listener #tenant_plan id in the forms for class cc_form
+	$("#tenant_plan").on('change', function(event) {
+		handlePlanChange($('#tenant_plan :selected').val(), ".cc_form");
+	});
 
 // call plan change handeler so that the plan is set correctly in the drop down when the page loads
-	handlePlanChange(GetURLParameter('plan'), ".cc_form");
+	handlePlanChange(GetURLParameter('plan'), '.cc_form');
 
 // function to handle the token received from Stripe and remove credit card fields.
 	stripeResponseHandler = function(status, response) {
@@ -52,27 +68,26 @@ $(document).ready(function() {
 
 		if (response.error) {
 			console.log(response.error.message);
-			show_error(response.error.message);
-			$form.find("input[type=submit]").prop("disabled", false);
+			showError(response.error.message);
+			$form.find('input[type=submit]').prop('disabled', false);
 		} else {
 			token = response.id;
-			$form.append($("<input type=\"hidden\" name=\"payment[token]\" />").val(token));
-			$("[data-stripe=number]").remove();
-			$("[data-stripe=cvv]").remove();
-			$("[data-stripe=exp-year]").remove();
-			$("[data-stripe=exp-month]").remove();
-			$("[data-stripe=label]").remove();
+			$form.append($('<input type=\"hidden\" name=\"payment[token]\" />').val(token));
+			$('[data-stripe=number]').remove();
+			$('[data-stripe=cvv]').remove();
+			$('[data-stripe=exp-year]').remove();
+			$('[data-stripe=exp-month]').remove();
+			$('[data-stripe=label]').remove();
 			$form.get(0).submit();
 		}
 		return false;
 	};
 	// function to show errors when Stripe functionality returns an error
-	show_error = function(message) {
-		if($("#flash-messages").size() < 1) {
-			$('div.container.main div:first').prepend("<div id='flash-messages'></div>")
+	showError = function(message) {
+		if($('#flash-messages').size() < 1) {
+			$('div.container.main div:first').prepend('<div id='flash-messages'></div>');
 		}
-		$("#flash-messages").html('div class="alert alert-warning"><a class="close" data-dismiss="alert">x</a><div id="flash_alert">'
-		 + message + '</div></div>');
+		$('#flash-messages').html('div class="alert alert-warning"><a class="close" data-dismiss="alert">x</a><div id="flash_alert">' + message + '</div></div>');
 		$('.alert').delay(5000).fadeOut(3000);
 		return false;
 	};
