@@ -40,7 +40,7 @@ $(document).ready(function() {
 			plan_type = $('#tenant_plan :selected').val();
 		}
 
-		if(plan_type === 'premium') {
+		if(plan_type == 'premium') {
 			$('[data-stripe').prop('required', true);
 			$form.off('submit');
 			$form.on('submit', submitHandler);
@@ -50,7 +50,7 @@ $(document).ready(function() {
 			$form.off('submit');
 			$('[data-stripe]').removeProp('required');
 		}
-	}
+	};
 
 // Set up plan change event listener #tenant_plan id in the forms for class cc_form
 	$("#tenant_plan").on('change', function(event) {
