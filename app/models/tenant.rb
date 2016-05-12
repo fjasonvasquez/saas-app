@@ -22,7 +22,7 @@ class Tenant < ActiveRecord::Base
         raise ::Milia::Control::MaxTenantExceeded, "Sorry, new accounts not permitted at this time" 
 
       else 
-        tenant.save    # create the tenant
+        tenant.save   
       end
       return tenant
     end
