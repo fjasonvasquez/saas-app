@@ -6,6 +6,6 @@ class CreatePayments < ActiveRecord::Migration
       t.belongs_to :tenant, index: true, foreign_key: true
 
       t.timestamps null: false
-    end
+    end  
   end
 end

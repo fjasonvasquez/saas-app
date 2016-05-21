@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       put 'add_user', on: :member
     end
   end
-  resources :members
+  resources :members  
   get 'home/index'
 
    root :to => 'home#index'

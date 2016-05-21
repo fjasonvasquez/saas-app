@@ -4,7 +4,7 @@ class CreateUserProjects < ActiveRecord::Migration
       t.belongs_to :project, index: true, foreign_key: true
       t.belongs_to :user, index: true, foreign_key: true
 
-      t.timestamps null: false
-    end
+      t.timestamps null: false 
+    end 
   end
 end
